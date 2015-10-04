@@ -23,8 +23,10 @@ import static org.junit.Assert.assertThat;
 public class FilterTest {
 	@Test
 	public void sellOnly() throws Exception {
-		List<Trade> trades = TradeRepo.getAll().stream().filter(trade -> trade.getOrder() == Trade.Order.SELL).collect(
-				toList());
+		List<Trade> trades = TradeRepo.getAll()
+		                              .stream()
+		                              .filter(trade -> trade.getOrder() == Trade.Order.SELL)
+		                              .collect(toList());
 		
 		assertThat(trades, everyItem(hasProperty("order", not(Trade.Order.BUY))));
 	}
@@ -41,7 +43,8 @@ public class FilterTest {
 		Predicate<Trade> sellOnly = Trade::isSell;
 		Predicate<Trade> volLessThan0Point5 = trade -> trade.getVolume() < 0.5;
 		
-		List<Trade> trades = TradeRepo.getAll().stream().filter(sellOnly.and(volLessThan0Point5)).collect(toList());
+		List<Trade> trades = TradeRepo.getAll().stream().filter(sellOnly.and(volLessThan0Point5)).collect(
+				toList());
 		
 		assertThat(trades,
 		           allOf(everyItem(hasProperty("order", is(Trade.Order.SELL))),
@@ -69,7 +72,11 @@ public class FilterTest {
 	
 	@Test
 	public void skipFirst2Odd() throws Exception {
-		List<Integer> ints = Arrays.asList(1, 2, 3, 4, 5, 6).stream().filter(i -> i % 2 != 0).skip(2).collect(toList());
+		List<Integer> ints = Arrays.asList(1, 2, 3, 4, 5, 6)
+		                           .stream()
+		                           .filter(i -> i % 2 != 0)
+		                           .skip(2)
+		                           .collect(toList());
 
 		assertThat(ints, contains(5));
 	}
