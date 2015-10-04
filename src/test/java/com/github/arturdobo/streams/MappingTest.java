@@ -2,7 +2,6 @@ package com.github.arturdobo.streams;
 
 import com.github.arturdobo.trade.Trade;
 import com.github.arturdobo.trade.TradeRepo;
-import org.hamcrest.core.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -15,12 +14,16 @@ import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsCollectionContaining.*;
 import static org.junit.Assert.assertThat;
 
 public class MappingTest {
 	@Test
 	public void onlyOrderEnums() throws Exception {
-		Set<Trade.Order> orders = TradeRepo.getAll().stream().map(Trade::getOrder).collect(toSet());
+		Set<Trade.Order> orders = TradeRepo.getAll()
+		                                   .stream()
+		                                   .map(Trade::getOrder)
+		                                   .collect(toSet());
 
 		assertThat(orders, hasSize(2));
 	}
@@ -46,7 +49,7 @@ public class MappingTest {
 		                             .distinct()
 		                             .collect(toList());
 
-		assertThat(strings, IsCollectionContaining.hasItems("q", "w", "e", "r", "t", "y", "u"));
+		assertThat(strings, hasItems("q", "w", "e", "r", "t", "y", "u"));
 	}
 	
 	@Test
@@ -60,6 +63,7 @@ public class MappingTest {
 		                                             .map(j -> new int[] { i, j }))
 		                         .collect(toList());
 
-		assertThat(pairs, IsCollectionContaining.hasItems(new int[] { 2, 4 }));
+		assertThat(pairs, hasItems(new int[] { 2, 4 }));
 	}
+
 }

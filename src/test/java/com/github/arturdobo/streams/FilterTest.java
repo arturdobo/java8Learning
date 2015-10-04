@@ -33,7 +33,10 @@ public class FilterTest {
 	
 	@Test
 	public void buyOnlyWithMethodReference() throws Exception {
-		List<Trade> trades = TradeRepo.getAll().stream().filter(Trade::isBuy).collect(toList());
+		List<Trade> trades = TradeRepo.getAll()
+		                              .stream()
+		                              .filter(Trade::isBuy)
+		                              .collect(toList());
 		
 		assertThat(trades, everyItem(hasProperty("order", not(Trade.Order.SELL))));
 	}
@@ -43,8 +46,10 @@ public class FilterTest {
 		Predicate<Trade> sellOnly = Trade::isSell;
 		Predicate<Trade> volLessThan0Point5 = trade -> trade.getVolume() < 0.5;
 		
-		List<Trade> trades = TradeRepo.getAll().stream().filter(sellOnly.and(volLessThan0Point5)).collect(
-				toList());
+		List<Trade> trades = TradeRepo.getAll()
+		                              .stream()
+		                              .filter(sellOnly.and(volLessThan0Point5))
+		                              .collect(toList());
 		
 		assertThat(trades,
 		           allOf(everyItem(hasProperty("order", is(Trade.Order.SELL))),
@@ -53,7 +58,11 @@ public class FilterTest {
 	
 	@Test
 	public void only5firstSell() throws Exception {
-		List<Trade> trades = TradeRepo.getAll().stream().filter(Trade::isSell).limit(5).collect(toList());
+		List<Trade> trades = TradeRepo.getAll()
+		                              .stream()
+		                              .filter(Trade::isSell)
+		                              .limit(5)
+		                              .collect(toList());
 
 		assertThat(trades, everyItem(hasProperty("order", is(Trade.Order.SELL))));
 		assertThat(trades, hasSize(5));
@@ -83,7 +92,10 @@ public class FilterTest {
 	
 	@Test
 	public void listShouldBeEmptyWhenLimitNumberIsGreaterThanListSize() throws Exception {
-		List<Integer> ints = Arrays.asList(1, 2, 3, 4, 5).stream().skip(6).collect(toList());
+		List<Integer> ints = Arrays.asList(1, 2, 3, 4, 5)
+		                           .stream()
+		                           .skip(6)
+		                           .collect(toList());
 
 		assertThat(ints, IsEmptyCollection.<Integer>empty());
 	}
