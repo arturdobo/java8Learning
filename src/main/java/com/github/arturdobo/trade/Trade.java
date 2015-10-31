@@ -23,6 +23,10 @@ public class Trade {
 		return order == Order.BUY;
 	}
 
+	public boolean isChargeFree() {
+		return volume <= 1;
+	}
+
 	public enum Order {
 		BUY, SELL
 	}
