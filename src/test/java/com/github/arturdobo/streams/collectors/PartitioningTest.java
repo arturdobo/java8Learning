@@ -65,7 +65,7 @@ public class PartitioningTest {
 	}
 	
 	@Test
-	public void highestChargedAndChagreFreeVolume() throws Exception {
+	public void highestChargedAndChargeFreeVolume() throws Exception {
 		Map<Boolean, Trade> trades =
 				TradeRepo.getAll()
 				         .stream()
@@ -73,7 +73,9 @@ public class PartitioningTest {
 				                                 collectingAndThen(maxBy(comparingDouble(Trade::getVolume)),
 				                                                   Optional::get)));
 
-		assertThat(trades.get(true).getVolume(), closeTo(0.90, 0.05));
-		assertThat(trades.get(false).getVolume(), closeTo(334.05, 0.05));
+		assertThat(trades.get(true)
+		                 .getVolume(), closeTo(0.90, 0.05));
+		assertThat(trades.get(false)
+		                 .getVolume(), closeTo(334.05, 0.05));
 	}
 }
