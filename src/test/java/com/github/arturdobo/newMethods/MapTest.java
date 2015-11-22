@@ -88,7 +88,9 @@ public class MapTest {
 	
 	@Test
 	public void replaceAllValues() throws Exception {
-		map.replaceAll((key, oldValue) -> Optional.ofNullable(oldValue).orElse("newValue").toUpperCase());
+		map.replaceAll((key, oldValue) -> Optional.ofNullable(oldValue)
+		                                          .orElse("newValue")
+		                                          .toUpperCase());
 
 		assertThat(map.get("a"), equalTo("NEWVALUE"));
 		assertThat(map.get("c"), equalTo("SOMEVALUE"));
